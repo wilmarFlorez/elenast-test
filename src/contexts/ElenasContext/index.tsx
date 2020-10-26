@@ -5,7 +5,8 @@ import { loginAPI } from '../../services/Apollo/auth/index'
 import {
   getClientsAPI,
   createClientAPI,
-  getClientByIdAPI
+  getClientByIdAPI,
+  updateClientAPI
 } from '../../services/Apollo/Clients'
 import { ICreateClient } from '../../interfaces/CreateClient.interface'
 
@@ -24,8 +25,8 @@ export const ElenasContext = createContext<IElenasContext>({
   getClients: () => null,
   createClient: () => null,
   getClientById: () => null,
-  clientsById: []
-
+  clientsById: [],
+  updateClient: () => null,
 })
 
 export const ElenasProvider: React.FC = ({ children }) => {
@@ -77,7 +78,7 @@ export const ElenasProvider: React.FC = ({ children }) => {
 
   const getClientById = async (ids: number[]) => {
     try {
-      const response = await getClientByIdAPI([10098175])
+      const response = await getClientByIdAPI(ids)
 
       if (response.error === true) throw new Error(`Error fetching data`)
       debugger
@@ -104,6 +105,29 @@ export const ElenasProvider: React.FC = ({ children }) => {
 
       if (response.data.client) {
         setClient(response.data.client)
+        console.log(`Created client ${response.data.client}`)
+      }
+    } catch (error) {
+      console.log('No se ha podido crear el usuario!')
+    }
+  }
+
+  const updateClient = async (id: number, client: ICreateClient) => {
+    try {
+      const input = {
+        input: {
+          ...client
+        }
+      }
+      debugger
+      const response = await updateClientAPI(input, id)
+      if (response.error === true) throw new Error(`Error fetching data ${response.message}`, )
+
+      console.log('Response update client', response)
+
+      if (response.data.client) {
+        setClient(response.data.client)
+        console.log(`Updated Client ${response.data.client}`)
       }
     } catch (error) {
       console.log('No se ha podido crear el usuario!')
@@ -131,7 +155,8 @@ export const ElenasProvider: React.FC = ({ children }) => {
         createClient,
         getClientById,
         client,
-        clientsById
+        clientsById,
+        updateClient
       }}
     >
       {children}

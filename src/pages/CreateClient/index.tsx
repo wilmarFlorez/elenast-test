@@ -4,5 +4,10 @@ import { ElenasContext } from '../../contexts/ElenasContext'
 
 export const CreateClient = () => {
   const { createClient } = useContext(ElenasContext)
-  return <ClientForm isCreateUser createClient={createClient} />
+  return (
+    <>
+      <h1>Create Client</h1>
+      <ClientForm isCreateUser createClient={createClient} />
+    </>
+  )
 }

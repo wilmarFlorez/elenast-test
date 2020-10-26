@@ -10,7 +10,7 @@ import {
   IGraphQLResponseSucces
 } from '../../../interfaces/GraphqlResponse.interface'
 import { IClient } from '../../../interfaces/Client.interface'
-import { IApiCreateClientInput } from './types'
+import { IApiCreateClientInput, IApiUpdateClientInput } from './types'
 
 export const getClientsAPI = async (): Promise<
   IGraphQLResponseSucces<'client'> | IGraphQLResponseError
@@ -45,6 +45,35 @@ export const createClientAPI = async (
     const response = await Apollo().mutate({
       mutation: CREATE_CLIENT_MUTATION,
       variables: input
+    })
+
+    if (response.errors) throw new Error('Incorrect fetch')
+    debugger
+    return {
+      error: false,
+      data: {
+        client: response.data.createClient as IClient
+      }
+    }
+  } catch (error) {
+    if (error instanceof Error) return { error: true, message: error.message }
+
+    return {
+      error: true,
+      message: 'Error fetching data'
+    }
+  }
+}
+
+export const updateClientAPI = async (
+  input: IApiUpdateClientInput,
+  id: number
+): Promise<IGraphQLResponseSucces<'client'> | IGraphQLResponseError> => {
+  try {
+    debugger
+    const response = await Apollo().mutate({
+      mutation: UPDATE_CLIENT_MUTATION,
+      variables: {id, ...input}
     })
 
     if (response.errors) throw new Error('Incorrect fetch')

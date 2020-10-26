@@ -3,12 +3,16 @@ import { ClientForm } from '../../components/ClientForm'
 import { ElenasContext } from '../../contexts/ElenasContext'
 
 export const UpdateClient = () => {
-  const { clientsById, createClient } = useContext(ElenasContext)
+  const { clientsById, updateClient } = useContext(ElenasContext)
+  console.log('updateClient', clientsById)
   return (
-    <ClientForm
+    <>
+      <h1>Update Client</h1>
+       <ClientForm
       isCreateUser={false}
-      createClient={createClient}
+      updateClient={updateClient}
       client={clientsById[0]}
     />
+    </>
   )
 }

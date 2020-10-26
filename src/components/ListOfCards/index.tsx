@@ -25,7 +25,7 @@ export const ListOfCards = () => {
           }}
         >
           <h1>Clients</h1>
-          <Link to='/client/create/:id'>
+          <Link to='/client/create'>
             <Button type="primary" size="middle">
               Add Client
             </Button>

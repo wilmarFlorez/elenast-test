@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Form, Input, Button } from 'antd'
 import { IClientFormInputs } from './types'
 
@@ -17,23 +17,25 @@ export const ClientForm: React.FC<IClientFormInputs> = ({
   updateClient,
   client
 }: IClientFormInputs) => {
-  console.log('Client form', client)
+  const [successMessage, setSuccessMessage] = useState('')
 
-  const onFinish = (values: any) => {
-    const client = {
-      firstName: values.client.firstName,
-      lastName: values.client.lastName,
-      cellphone: values.client.cellphone,
+  const onFinish = async (values: any) => {
+    const clientInput = {
+      firstName: String(values.client.firstName),
+      lastName: String(values.client.lastName),
+      cellphone: String(values.client.cellphone),
       address: {
-        streetAddress: values.client.address
+        streetAddress: String(values.client.address)
       }
     }
     if (createClient && isCreateUser) {
-      createClient(client)
+      await createClient(clientInput)
+      setSuccessMessage('User successfully created')
     }
 
-    if (updateClient && !isCreateUser) {
-      updateClient([3333], client)
+    if (updateClient && !isCreateUser && client?.id) {
+      await updateClient(client.id, clientInput)
+      setSuccessMessage('User updated successfully')
     }
   }
 
@@ -44,6 +46,11 @@ export const ClientForm: React.FC<IClientFormInputs> = ({
       onFinish={onFinish}
       validateMessages={validateMessages}
     >
+      {successMessage && (
+        <div>
+          <p style={{ color: 'green', fontSize: '1.2em'}}>{successMessage}</p>
+        </div>
+      )}
       <Form.Item
         name={['client', 'firstName']}
         label="First Name"
