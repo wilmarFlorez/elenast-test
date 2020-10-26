@@ -7,7 +7,7 @@ export const UpdateClient = () => {
   console.log('updateClient', clientsById)
   return (
     <>
-      <h1>Update Client</h1>
+      <h1 style={{textAlign: 'center'}}>Update Client</h1>
        <ClientForm
       isCreateUser={false}
       updateClient={updateClient}

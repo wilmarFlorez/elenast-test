@@ -6,7 +6,7 @@ export const CreateClient = () => {
   const { createClient } = useContext(ElenasContext)
   return (
     <>
-      <h1>Create Client</h1>
+      <h1 style={{textAlign: 'center'}}>Create Client</h1>
       <ClientForm isCreateUser createClient={createClient} />
     </>
   )

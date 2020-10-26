@@ -4,7 +4,7 @@ import { IClientFormInputs } from './types'
 
 const layout = {
   labelCol: { span: 8 },
-  wrapperCol: { span: 16 }
+  wrapperCol: { span: 8 }
 }
 
 const validateMessages = {
@@ -47,9 +47,9 @@ export const ClientForm: React.FC<IClientFormInputs> = ({
       validateMessages={validateMessages}
     >
       {successMessage && (
-        <div>
-          <p style={{ color: 'green', fontSize: '1.2em'}}>{successMessage}</p>
-        </div>
+        <p style={{ color: 'green', fontSize: '1.2em', textAlign: 'center' }}>
+          {successMessage}
+        </p>
       )}
       <Form.Item
         name={['client', 'firstName']}

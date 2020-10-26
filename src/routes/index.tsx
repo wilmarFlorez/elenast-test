@@ -5,6 +5,7 @@ import { Home } from '../pages/Home'
 import { CreateClient } from '../pages/CreateClient'
 import { UpdateClient } from '../pages/UpdateClient'
 import { ElenasContext } from '../contexts/ElenasContext'
+import { LayoutComponent } from '../components/Layout'
 
 export const Routes: React.FC = () => {
   const { isAuth } = useContext(ElenasContext)
@@ -13,16 +14,18 @@ export const Routes: React.FC = () => {
     <BrowserRouter>
       <Switch>
         <Route path="/login" component={Login} />
-        <Route exact path="/">
-          {!isAuth ? <Redirect to="/login" /> : <Home />}
-        </Route>
+        <LayoutComponent>
+          <Route exact path="/">
+            {!isAuth ? <Redirect to="/login" /> : <Home />}
+          </Route>
+          <Route exact path="/client/create">
+            {!isAuth ? <Redirect to="/login" /> : <CreateClient />}
+          </Route>
+          <Route exact path="/client/update/:clientId">
+            {!isAuth ? <Redirect to="/login" /> : <UpdateClient />}
+          </Route>
+        </LayoutComponent>
       </Switch>
-      <Route exact path="/client/create">
-        {!isAuth ? <Redirect to="/login" /> : <CreateClient />}
-      </Route>
-      <Route exact path="/client/update/:clientId">
-        {!isAuth ? <Redirect to="/login" /> : <UpdateClient />}
-      </Route>
     </BrowserRouter>
   )
 }
